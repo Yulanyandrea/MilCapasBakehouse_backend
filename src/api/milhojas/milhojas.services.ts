@@ -2,7 +2,7 @@ import { DocumentDefinition } from 'mongoose';
 import Milhojas, {MilhojaDocument} from './milhojas.model';
 
 export function createMilhojas (milhoja:DocumentDefinition<Omit<MilhojaDocument,'createAt'|'updateAt'>>){
-  return Milhojas.create()
+  return Milhojas.create(milhoja)
 }
 
 export function getAllMilhojas (){
