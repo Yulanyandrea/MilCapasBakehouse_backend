@@ -1,5 +1,4 @@
 import { Request,Response,NextFunction } from 'express';
-import Milhojas,{ MilhojaDocument } from './milhojas.model';
 import { createMilhojas,
 getAllMilhojas,
 getMilhojaById,
@@ -32,7 +31,7 @@ export async function handleGetMilhojasId(req:Request,res:Response,next:NextFunc
   const { id } = req.params;
   try {
     const getMilhojas =await getMilhojaById(id);
-    if(!getAllMilhojas){
+    if(!getMilhojas){
       return res.status(404).json({message:"Milhoja not found"})
     }
   } catch (error) {

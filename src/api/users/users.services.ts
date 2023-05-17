@@ -1,22 +1,22 @@
 import { DocumentDefinition } from 'mongoose';
 import User, {UserDocument} from './users.model';
 
-export function createMilhojas (milhoja:DocumentDefinition<Omit<UserDocument,'createAt'|'updateAt'>>){
-  return User.create(milhoja)
+export function createUser (user:DocumentDefinition<Omit<UserDocument,'createAt'|'updateAt'>>){
+  return User.create(user)
 }
 
-export function getAllMilhojas (){
+export function getAllUser (){
   return User.find()
 }
 
-export function getMilhojaById(id:string){
-  const milhoja = User.findById(id);
-  return milhoja;
+export function getUserById(id:string){
+  const user = User.findById(id);
+  return user;
 }
 
-export function updateMilhoja(id:string, milhoja:DocumentDefinition<Omit<UserDocument,'createAt'|'updateAt'>>){
-  const updateMilhoja = User.findByIdAndUpdate(id,milhoja,{new:true})
-  return updateMilhoja;
+export function updateUser(id:string, user:DocumentDefinition<Omit<UserDocument,'createAt'|'updateAt'>>){
+  const updateUser = User.findByIdAndUpdate(id,user,{new:true})
+  return updateUser;
 }
 
 export function deleteMilhoja(id:string){
