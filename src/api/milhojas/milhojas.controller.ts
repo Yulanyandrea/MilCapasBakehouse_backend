@@ -5,6 +5,7 @@ getMilhojaById,
 deleteMilhoja,
 updateMilhoja,
 } from './milhojas.services';
+import Milhojas from './milhojas.model';
 
 export async function handleCreateMilhoja(req:Request,res:Response,next:NextFunction) {
   const data = req.body;
@@ -62,4 +63,17 @@ export async function handleDeleteMilhoja(req:Request,res:Response,next:NextFunc
   } catch (error) {
     return res.status(505).json(error)
   }
+}
+
+export async function handleFilterMilhojas(req:Request,res:Response,next:NextFunction) {
+  const { taste,image,detail } = req.query;
+  console.log(taste)
+
+  let milhojas;
+
+  if(taste){
+    milhojas = await Milhojas.find({ taste:taste, image:image,detail:detail})
+  }
+  return res.status(200).json(milhojas)
+
 }

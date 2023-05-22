@@ -3,10 +3,12 @@ import {  handleCreateMilhoja,
  handleDeleteMilhoja,
 handleGetAllMilhojas,
 handleGetMilhojasId,
-handleUpdateMilhoja} from './milhojas.controller';
+handleUpdateMilhoja,
+handleFilterMilhojas} from './milhojas.controller';
 
 const router = Router();
 router.get('/', handleGetAllMilhojas);
+router.get('/filter',handleFilterMilhojas);
 router.get('/:id',handleGetMilhojasId);
 router.post('/', handleCreateMilhoja);
 router.patch('/:id', handleUpdateMilhoja);

@@ -1,4 +1,4 @@
-import { DocumentDefinition } from 'mongoose';
+import { DocumentDefinition, FilterQuery } from 'mongoose';
 import Milhojas, {MilhojaDocument} from './milhojas.model';
 
 export function createMilhojas (milhoja:DocumentDefinition<Omit<MilhojaDocument,'createAt'|'updateAt'>>){
@@ -12,6 +12,11 @@ export function getAllMilhojas (){
 export function getMilhojaById(id:string){
   const milhoja = Milhojas.findById(id);
   return milhoja;
+}
+
+export function getMilhoja(filter:FilterQuery<MilhojaDocument>){
+  const product=Milhojas.findOne(filter);
+  return product
 }
 
 export function updateMilhoja(id:string, milhoja:DocumentDefinition<Omit<MilhojaDocument,'createAt'|'updateAt'>>){
