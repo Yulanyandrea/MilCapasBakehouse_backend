@@ -28,6 +28,10 @@ const MilhojasSchema = new Schema({
     type:String,
     require: true
   },
+  size:{
+    type:String,
+    require:true
+  },
 },{
     timestamps:true,
     versionKey:false

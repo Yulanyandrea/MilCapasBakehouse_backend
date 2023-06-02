@@ -66,16 +66,22 @@ export async function handleDeleteMilhoja(req:Request,res:Response,next:NextFunc
 }
 
 export async function handleFilterMilhojas(req:Request,res:Response,next:NextFunction) {
-  const { taste,image,detail } = req.query;
+  const { taste,image,detail,size } = req.query;
   let milhojas
-  if(taste && image && detail ){
-    milhojas = await Milhojas.find({ taste: taste, image:image, detail:detail});
+  if(taste && image && detail && size){
+    milhojas = await Milhojas.find({ taste: taste, image:image, detail:detail, size:size});
     }
-    else if(!taste && !image && !detail ){
+    else if(!taste && !image && !detail && !size ){
       milhojas = await Milhojas.find({  });
     }
     else if(taste){
       milhojas = await Milhojas.find({ taste:taste });
+    }
+    else if(size){
+      milhojas = await Milhojas.find({ size:size });
+    }
+    else if(taste && size){
+      milhojas = await Milhojas.find({ taste:taste, size:size });
     }
 
   return res.status(200).json(milhojas)
