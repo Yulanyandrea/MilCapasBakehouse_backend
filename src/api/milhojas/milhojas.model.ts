@@ -5,6 +5,8 @@ export interface MilhojaDocument extends Document{
   taste:string;
   detail:string;
   image:string;
+  size:string;
+  price:number;
 
 
   createdAt: Date;
@@ -32,6 +34,10 @@ const MilhojasSchema = new Schema({
     type:String,
     require:true
   },
+  price:{
+    type:Number,
+    require:true
+  }
 },{
     timestamps:true,
     versionKey:false
