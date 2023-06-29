@@ -1,43 +1,48 @@
-import { Schema,Document,model} from 'mongoose';
+import { Schema, model, Document } from 'mongoose';
 import bcrypt from 'bcrypt';
+
 import { userProfile } from './user.type';
 
-export interface UserDocument extends Document{
-  fullname:string;
-  password:string;
-  email:string;
+export interface UserDocument extends Document {
+  fullName: string;
+  email: string;
+  password: string; // 1234 -> hash - SHA256 -> 64 chars -> 32 bytes ->
   role: 'USER' | 'ADMIN';
   address:string;
   passwordResetToken?: string;
   passwordResetExpires?: Date;
+  createdAt: Date;
+  updatedAt: Date;
+
 
   profile: userProfile;
-
-  createdAt: Date;
-  updateAt:Date;
+  comparePassword: (password: string) => Promise<boolean>;
 }
 
-const UserSchema = new Schema({
-  fullname:{
+const UserSchema= new Schema({
+
+ fullName:{
     type:String,
-    require:true
+    require:true,
+  },
+  email:{
+    type:String,
+    require:true,
+    unique:true,
+  },
+  address:{
+    type:String,
+    unique:true,
   },
   password:{
     type:String,
-    require:true
+    require:true,
+    min:6,
   },
   role:{
     type:String,
     enum:['USER','ADMIN'],
     default: 'USER',
-  },
-  email:{
-    type:String,
-    require:true
-  },
-  address:{
-    type:String,
-    require:true
   },
   passwordResetToken: String,
   passwordResetExpires: Date,
@@ -45,22 +50,23 @@ const UserSchema = new Schema({
   {
     timestamps:true,
     versionKey:false
-  }
-)
 
-UserSchema.virtual("profile").get(function profile(){
-  const { fullname, email, address } = this;
+  });
+
+// Virtuals
+UserSchema.virtual('profile').get(function profile() {
+  const { fullName, email, address } = this;
 
   return {
-    fullname,
+    fullName,
     email,
     address
   };
-})
 
+});
 // Middlewares
 UserSchema.pre('save', async function save(next: Function) {
-  const user = this  as UserDocument;
+  const user = this as UserDocument;
 
   try {
     if(!user.isModified('password')) {
@@ -75,6 +81,7 @@ UserSchema.pre('save', async function save(next: Function) {
     next(error);
   }
 });
+
 
 // Methods
 async function comparePassword(this: UserDocument, candidatePassword: string, next: Function): Promise<boolean> {
@@ -92,6 +99,6 @@ async function comparePassword(this: UserDocument, candidatePassword: string, ne
 
 UserSchema.methods.comparePassword = comparePassword;
 
+const User = model<UserDocument>('User', UserSchema);
 
-const User = model<UserDocument>('user',UserSchema);
 export default User;

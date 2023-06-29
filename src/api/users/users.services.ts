@@ -1,4 +1,4 @@
-import { DocumentDefinition } from 'mongoose';
+import { DocumentDefinition, FilterQuery  } from 'mongoose';
 import User, {UserDocument} from './users.model';
 
 export function createUser (user:DocumentDefinition<Omit<UserDocument,'createAt'|'updateAt'>>){
@@ -7,6 +7,11 @@ export function createUser (user:DocumentDefinition<Omit<UserDocument,'createAt'
 
 export function getAllUser (){
   return User.find()
+}
+
+export function getUser(filter: FilterQuery<UserDocument>){
+  const user=User.findOne(filter);
+  return user
 }
 
 export function getUserById(id:string){
