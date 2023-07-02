@@ -37,6 +37,9 @@ const MilhojasSchema = new Schema({
   price:{
     type:String,
     require:true
+  },amount:{
+    type:Number,
+    default: 1
   }
 },{
     timestamps:true,
