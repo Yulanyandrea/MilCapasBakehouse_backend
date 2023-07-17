@@ -1,5 +1,5 @@
 export type userProfile={
-  fullName:string;
+  completeName:string;
   email: string;
   address:string;
 }

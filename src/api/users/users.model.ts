@@ -4,7 +4,7 @@ import bcrypt from 'bcrypt';
 import { userProfile } from './user.type';
 
 export interface UserDocument extends Document {
-  fullName: string;
+  completeName: string;
   email: string;
   password: string; // 1234 -> hash - SHA256 -> 64 chars -> 32 bytes ->
   role: 'USER' | 'ADMIN';
@@ -20,8 +20,7 @@ export interface UserDocument extends Document {
 }
 
 const UserSchema= new Schema({
-
- fullName:{
+completeName:{
     type:String,
     require:true,
   },
@@ -55,15 +54,16 @@ const UserSchema= new Schema({
 
 // Virtuals
 UserSchema.virtual('profile').get(function profile() {
-  const { fullName, email, address } = this;
+  const { completeName, email, address } = this;
 
   return {
-    fullName,
+    completeName,
     email,
     address
   };
 
 });
+
 // Middlewares
 UserSchema.pre('save', async function save(next: Function) {
   const user = this as UserDocument;
@@ -81,7 +81,6 @@ UserSchema.pre('save', async function save(next: Function) {
     next(error);
   }
 });
-
 
 // Methods
 async function comparePassword(this: UserDocument, candidatePassword: string, next: Function): Promise<boolean> {
