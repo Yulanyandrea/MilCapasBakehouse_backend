@@ -1,11 +1,11 @@
 import jwt, { decode } from 'jsonwebtoken';
 import { Request, Response, NextFunction } from 'express';
-import {getUser } from '../api/users/users.services';
+import { getUser } from '../api/users/users.services';
 import { UserDocument } from '../api/users/users.model';
 import { AuthTypes, roles } from './auth.types';
 import { token } from 'morgan';
 
-const key= process.env.SECRET_TOKEN as string
+const key= process.env.SECRET_TOKEN_APP as string
 
 //sign token
 export function signToken(payload:any){

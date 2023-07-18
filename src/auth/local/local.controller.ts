@@ -5,22 +5,19 @@ import { signToken } from '../auth.services';
 export  async function handleLoginUser(req:Request,res:Response,next:NextFunction){
   const { email, password }=req.body;
   try {
-    const userLogIn = await getUser({email});
+    const userLogIn= await getUser({email})
     if(!userLogIn){
       return res.status(404).json({message:'Invalid email or password'})
     }
-
-    const validatePassword = await userLogIn.comparePassword(password)
+    const validatePassword= await userLogIn.comparePassword(password)
     if(!validatePassword){
-      return res.status(404).json({message:'Invalid email or password'})
+      return res.status(401).json({message:'Invalid email or password'})
     }
-    const payload = userLogIn.profile;
-
+    const payload=userLogIn.profile
     //token
-    const token = signToken(payload);
-    return res.status(200).json({profile:userLogIn,token})
+    const token= signToken(payload);
+    return res.status(200).json({profile:userLogIn,token })
   } catch (error:any) {
     return res.status(500).json(error.message)
-
   }
 }
