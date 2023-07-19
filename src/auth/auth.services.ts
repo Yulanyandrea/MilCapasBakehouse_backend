@@ -5,7 +5,8 @@ import { UserDocument } from '../api/users/users.model';
 import { AuthTypes, roles } from './auth.types';
 import { token } from 'morgan';
 
-const key= process.env.SECRET_TOKEN_APP as string
+const key=process.env.MONGO_DB_URI as string
+
 
 //sign token
 export function signToken(payload:any){
