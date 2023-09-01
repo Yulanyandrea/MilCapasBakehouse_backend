@@ -9,6 +9,7 @@ export interface UserDocument extends Document {
   password: string; // 1234 -> hash - SHA256 -> 64 chars -> 32 bytes ->
   role: 'USER' | 'ADMIN';
   address:string;
+  phone:string;
   passwordResetToken?: string;
   passwordResetExpires?: Date;
   createdAt: Date;
@@ -33,6 +34,10 @@ completeName:{
     type:String,
     unique:true,
   },
+  phone:{
+    type:String,
+    require:true
+  },
   password:{
     type:String,
     require:true,
@@ -54,12 +59,13 @@ completeName:{
 
 // Virtuals
 UserSchema.virtual('profile').get(function profile() {
-  const { completeName, email, address } = this;
+  const { completeName, email, address,phone } = this;
 
   return {
     completeName,
     email,
-    address
+    address,
+    phone
   };
 
 });
