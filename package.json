@@ -53,7 +53,7 @@
     "stripe": "^11.3.0"
   },
   "volta": {
-    "node": "18.12.1",
+    "node": "20.9.0",
     "npm": "8.19.3"
   },
   "homepage": "https://github.com/Yulanyandrea/AmasaMilhojeria_Backend-Typescript#readme"
